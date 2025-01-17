@@ -10,6 +10,9 @@ import org.springframework.lang.Nullable;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
@@ -100,6 +103,26 @@ public class AppConfig {
             }
             
         };
+
+        
+    }
+
+    /*
+     * PasswordEncoder:
+    Şifreleri (parolaları) güvenli bir şekilde hashlemek (şifrelemek) için kullanılan bir arayüzdür.
+    Spring Security'de şifrelerin saklanması ve doğrulanması sırasında kullanılır.
+    Farklı hashing algoritmalarıyla uygulanabilir (örneğin, BCrypt, PBKDF2, Argon2).
+
+    BCryptPasswordEncoder:
+    Bu metotta döndürülen nesne, Spring Security'nin sağladığı bir BCryptPasswordEncoder örneğidir.
+    BCrypt bir şifreleme algoritmasıdır ve şifrelerin güvenli bir şekilde saklanmasını sağlar.
+    
+    Şifreleri geri döndürülemez şekilde hashler.Her hash için bir salt kullanır (aynı şifreler için farklı hashler üretir).
+    Zamanla daha güçlü hale gelen bir algoritmadır.
+     */
+    @Bean
+    PasswordEncoder passwordEncoder(){
+        return new BCryptPasswordEncoder();
     }
 
 }
